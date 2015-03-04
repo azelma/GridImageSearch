@@ -1,11 +1,12 @@
 package com.example.valerie.gridimagesearch.activities;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 
@@ -41,6 +42,16 @@ public class SearchActivity extends ActionBarActivity {
     private void setupViews() {
         etQuery = (EditText) findViewById(R.id.etQuery);
         gvResults = (GridView) findViewById(R.id.gvResults);
+        gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(SearchActivity.this, ImageDisplayActivity.class);
+                ImageResult result = imageResults.get(position);
+                i.putExtra("url", result.fullUrl);
+                startActivity(i);
+            }
+        });
+
     }
 
     public void onImageSearch(View v){
